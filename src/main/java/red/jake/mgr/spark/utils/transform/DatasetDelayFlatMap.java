@@ -5,8 +5,6 @@ import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 import red.jake.mgr.spark.model.AirlineHeader;
-import red.jake.mgr.spark.model.RowAirline;
-import red.jake.mgr.spark.model.RowDelayType;
 
 import java.util.ArrayList;
 import java.util.Iterator;

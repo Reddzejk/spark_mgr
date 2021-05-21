@@ -1,19 +1,12 @@
 package red.jake.mgr.spark.dataset;
 
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.threeten.extra.DayOfMonth;
 import red.jake.mgr.spark.BaseJob;
-import red.jake.mgr.spark.model.RowAirline;
-import red.jake.mgr.spark.model.RowAirlineDated;
 import red.jake.mgr.spark.utils.EnvironmentType;
 import red.jake.mgr.spark.utils.SourceFactory;
-import red.jake.mgr.spark.utils.transform.AirlineDateMapper;
 import red.jake.mgr.spark.utils.transform.DatasetPrinter;
-import red.jake.mgr.spark.utils.transform.Printer;
 
 import static org.apache.spark.sql.functions.*;
 
@@ -33,9 +26,9 @@ public class MapExperiment extends BaseJob {
         Dataset<Row> datedAirlines = airlines
                 .withColumn("DayofMonth", uniqueString("DayofMonth"))
                 .withColumn("Month", uniqueString("Month"))
-                .withColumn("Date", concat_ws("-", col("DayofMonth")
+                .withColumn("Date", to_date(concat_ws("-", col("Year")
                         , col("Month")
-                        , col("Year")))
+                        , col("DayofMonth"))))
                 .drop("DayofMonth", "Month", "Year");
         datedAirlines.foreach(new DatasetPrinter());
     }
