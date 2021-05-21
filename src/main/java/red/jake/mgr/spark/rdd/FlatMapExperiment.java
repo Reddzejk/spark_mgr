@@ -21,7 +21,7 @@ public class FlatMapExperiment extends BaseJob {
     }
 
     public void runJob() {
-        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineTypedSource(context, EnvironmentType.valueOf(envType));
+        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineJavaRdd(context, EnvironmentType.valueOf(envType));
         JavaRDD<RowDelayType> flatted = airlines.flatMap(new DelayFlatMap());
         flatted.foreach(new Printer<>());
     }

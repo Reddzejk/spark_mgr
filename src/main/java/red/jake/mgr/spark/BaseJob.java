@@ -1,7 +1,6 @@
 package red.jake.mgr.spark;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
@@ -14,8 +13,8 @@ public abstract class BaseJob {
 
     public BaseJob(String[] params) {
         envType = getEnvType(params);
-        context = new JavaSparkContext(new SparkConf().setAppName("MapExperiment").setMaster("local[*]"));
-        session = null;
+        context = new JavaSparkContext(new SparkConf().setAppName("Rdd").setMaster("local[*]"));
+        session = SparkSession.builder().appName("Dataset").master("local[*]").getOrCreate();
     }
 
     private String getEnvType(String[] param) {

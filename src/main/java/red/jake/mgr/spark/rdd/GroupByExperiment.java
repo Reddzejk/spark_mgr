@@ -22,7 +22,7 @@ public class GroupByExperiment extends BaseJob {
     }
 
     public void runJob() {
-        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineTypedSource(context, EnvironmentType.valueOf(envType));
+        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineJavaRdd(context, EnvironmentType.valueOf(envType));
         JavaPairRDD<String, Iterable<RowAirline>> groups = airlines.groupBy(row -> row.year);
         JavaRDD<RowYearCount> yearCount = groups.map(new ReduceGroup());
         yearCount.foreach(new Printer<>());

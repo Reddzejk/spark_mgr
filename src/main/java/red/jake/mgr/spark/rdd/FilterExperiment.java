@@ -19,7 +19,7 @@ public class FilterExperiment extends BaseJob {
     }
 
     public void runJob() {
-        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineTypedSource(context, EnvironmentType.valueOf(envType));
+        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineJavaRdd(context, EnvironmentType.valueOf(envType));
         JavaRDD<RowAirline> filtered = airlines.filter(row -> row.year.equals("2008"));
         filtered.foreach(new Printer<>());
     }

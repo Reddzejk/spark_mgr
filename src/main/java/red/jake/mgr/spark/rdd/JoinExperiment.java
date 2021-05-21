@@ -24,8 +24,8 @@ public class JoinExperiment extends BaseJob {
     }
 
     public void runJob() {
-        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineTypedSource(context, EnvironmentType.valueOf(envType));
-        JavaRDD<RowCarrier> carriers = SourceFactory.getCarrierTypedSource(context);
+        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineJavaRdd(context, EnvironmentType.valueOf(envType));
+        JavaRDD<RowCarrier> carriers = SourceFactory.getCarrieraJavaRdd(context);
         JavaPairRDD<String, RowAirline> right = airlines.mapToPair((PairFunction<RowAirline, String, RowAirline>) rowAirline -> new Tuple2<>(rowAirline.uniqueCarrier, rowAirline));
         JavaPairRDD<String, RowCarrier> left = carriers.mapToPair((PairFunction<RowCarrier, String, RowCarrier>) rowCarrier -> new Tuple2<>(rowCarrier.code, rowCarrier));
         Broadcast<JavaPairRDD<String, RowCarrier>> broadcast = context.broadcast(left);

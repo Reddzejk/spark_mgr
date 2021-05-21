@@ -21,7 +21,7 @@ public class MapExperiment extends BaseJob {
     }
 
     public void runJob() {
-        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineTypedSource(context, EnvironmentType.valueOf(envType));
+        JavaRDD<RowAirline> airlines = SourceFactory.getAirlineJavaRdd(context, EnvironmentType.valueOf(envType));
         JavaRDD<RowAirlineDated> mapped = airlines.map(new AirlineDateMapper());
         mapped.foreach(new Printer<>());
     }
